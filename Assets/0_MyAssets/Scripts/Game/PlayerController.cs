@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            var forward = Vector3.zero;
+            forward.z = transform.forward.z;
+            transform.forward = forward;
             forwardRb.velocity = transform.forward * forwardSpeed;
         }
 
@@ -79,5 +82,16 @@ public class PlayerController : MonoBehaviour
             curvePos.y = transform.position.y;
             curveRadius = Vector3.Distance(curvePos, transform.position);
         }
+    }
+
+    Transform GetCurvePoint()
+    {
+        Ray ray = new Ray(transform.position, -transform.right);
+        float distance = 10f;
+        Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, distance);
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.red);
+        if (hit.collider == null) return null;
+        if (!hit.collider.gameObject.CompareTag("CurvePoint")) return null;
+        return hit.collider.transform;
     }
 }
