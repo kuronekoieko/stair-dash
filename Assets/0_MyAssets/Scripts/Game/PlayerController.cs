@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Vector3 tapPos;
     float horizontalSpeed;
     float horizontalSpeedLimit = 20f;
-    float forwardSpeed = 15f;
+    float forwardSpeed = 20f;
 
     bool isCurving;
     Vector3 curvePos;
