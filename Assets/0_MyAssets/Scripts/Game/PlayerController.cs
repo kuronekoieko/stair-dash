@@ -8,9 +8,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody horizontalRb;
     Vector3 tapPos;
     float horizontalSpeed;
-    float horizontalSpeedLimit = 20f;
-    float forwardSpeed = 20f;
+    readonly float horizontalLimit = 2.5f;
+    readonly float forwardSpeed = 20f;
 
+    Vector3 horizontalLocalPos;
     bool isCurving;
     Vector3 curvePos;
     float curveRadius;
@@ -35,17 +36,6 @@ public class PlayerController : MonoBehaviour
             transform.forward = forward;
             forwardRb.velocity = transform.forward * forwardSpeed;
         }
-
-        horizontalRb.velocity = horizontalRb.transform.right * horizontalSpeed;
-
-    }
-
-    private void LateUpdate()
-    {
-        var localPos = horizontalRb.transform.localPosition;
-        localPos.y = 0;
-        localPos.z = 0;
-        horizontalRb.transform.localPosition = localPos;
     }
 
     void Update()
@@ -58,19 +48,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 drag = Input.mousePosition - tapPos;
-            tapPos = Input.mousePosition;
-            SetHorizontalVel(xSpeed: drag.x);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            SetHorizontalVel(xSpeed: 0);
+            float t = Mathf.Clamp(drag.x / 100f, -1, 1);
+            horizontalLocalPos = Vector3.LerpUnclamped(Vector3.zero, Vector3.right * horizontalLimit, t);
         }
     }
 
-    void SetHorizontalVel(float xSpeed)
+    private void LateUpdate()
     {
-        horizontalSpeed = Mathf.Clamp(xSpeed, -horizontalSpeedLimit, horizontalSpeedLimit);
+        horizontalRb.transform.localPosition = horizontalLocalPos;
     }
 
     private void OnTriggerEnter(Collider other)
