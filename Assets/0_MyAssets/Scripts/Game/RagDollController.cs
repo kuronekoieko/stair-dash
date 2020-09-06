@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObstacleType
+{
+    Sitting = 0,
+    WalkWithPapers = 1,
+}
 public class RagDollController : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] ParticleSystem hitPS;
+    [SerializeField] ObstacleType obstacleType;
     Rigidbody[] ragdollRbs;
     private void Awake()
     {
@@ -13,7 +19,6 @@ public class RagDollController : MonoBehaviour
     }
     void Start()
     {
-
     }
 
     private void OnTriggerEnter(Collider other)
