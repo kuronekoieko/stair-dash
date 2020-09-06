@@ -5,6 +5,7 @@ using UnityEngine;
 public class RagDollController : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    [SerializeField] ParticleSystem hitPS;
     Rigidbody[] ragdollRbs;
     private void Awake()
     {
@@ -23,7 +24,8 @@ public class RagDollController : MonoBehaviour
     void HitPlayer(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) { return; }
-
+        hitPS.transform.position = other.ClosestPoint(other.transform.position);
+        hitPS.Play();
         foreach (var rb in ragdollRbs)
         {
             var vec = transform.position - other.transform.position;
