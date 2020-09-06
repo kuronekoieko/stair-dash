@@ -17,16 +17,18 @@ public class RagDollController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        HitPlayer(other);
+    }
 
+    void HitPlayer(Collider other)
+    {
+        if (!other.gameObject.CompareTag("Player")) { return; }
 
-        if (other.gameObject.CompareTag("Player"))
+        foreach (var rb in ragdollRbs)
         {
-            foreach (var rb in ragdollRbs)
-            {
-                var vec = transform.position - other.transform.position;
-                rb.AddForce(vec.normalized * 100f, ForceMode.Impulse);
-                animator.enabled = false;
-            }
+            var vec = transform.position - other.transform.position;
+            rb.AddForce(vec.normalized * 100f, ForceMode.Impulse);
+            animator.enabled = false;
         }
     }
 }
