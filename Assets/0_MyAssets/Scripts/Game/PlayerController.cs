@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     bool isCurving;
     Vector3 curvePos;
     float curveRadius;
+    float horizontalInterpolate;
+    readonly float horizontalDragMax = 200;
 
     void Start()
     {
@@ -40,17 +42,23 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
+            var rate = InverseLerpUnclamped(0, horizontalLimit, horizontalRb.transform.localPosition.x);
+            horizontalInterpolate = Mathf.Clamp(rate, -1, 1);
+
             tapPos = Input.mousePosition;
+            tapPos.x = GetLerpMin(tapPos.x, horizontalDragMax, horizontalInterpolate);
         }
 
         if (Input.GetMouseButton(0))
         {
             Vector3 drag = Input.mousePosition - tapPos;
-            float t = Mathf.Clamp(drag.x / 100f, -1, 1);
-            horizontalLocalPos = Vector3.LerpUnclamped(Vector3.zero, Vector3.right * horizontalLimit, t);
+            horizontalInterpolate = Mathf.Clamp(drag.x / horizontalDragMax, -1, 1);
         }
+
+        horizontalLocalPos = Vector3.LerpUnclamped(Vector3.zero, Vector3.right * horizontalLimit, horizontalInterpolate);
     }
 
     private void LateUpdate()
@@ -78,5 +86,17 @@ public class PlayerController : MonoBehaviour
         if (hit.collider == null) return null;
         if (!hit.collider.gameObject.CompareTag("CurvePoint")) return null;
         return hit.collider.transform;
+    }
+
+
+    float InverseLerpUnclamped(float min, float max, float value)
+    {
+        return value / (max - min);
+    }
+
+
+    float GetLerpMin(float lerp, float maxDistance, float t)
+    {
+        return lerp - maxDistance * t;
     }
 }
