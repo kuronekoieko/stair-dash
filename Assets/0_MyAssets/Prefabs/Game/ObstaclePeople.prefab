@@ -1580,6 +1580,7 @@ MonoBehaviour:
   hitPS: {fileID: 191128839416200920}
   obstacleType: 0
   parentRb: {fileID: 6369241205190340769}
+  parentCollider: {fileID: 7041696159136522816}
   luggageParentTf: {fileID: 4271294834183809263}
 --- !u!136 &7041696159136522816
 CapsuleCollider:

@@ -13,6 +13,7 @@ public class RagDollController : MonoBehaviour
     [SerializeField] ParticleSystem hitPS;
     [SerializeField] ObstacleType obstacleType;
     [SerializeField] Rigidbody parentRb;
+    [SerializeField] CapsuleCollider parentCollider;
     [SerializeField] Transform luggageParentTf;
     Rigidbody[] ragdollRbs;
     Rigidbody[] luggageRbs;
@@ -62,6 +63,7 @@ public class RagDollController : MonoBehaviour
     void HitPlayer(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) { return; }
+        parentCollider.enabled = false;
         //hitPS.transform.position = other.ClosestPoint(other.transform.position);
         hitPS.Play();
         parentRb.isKinematic = true;

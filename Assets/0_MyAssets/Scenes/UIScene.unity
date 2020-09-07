@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 267688011}
   - component: {fileID: 267688010}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HitCountImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1845,6 +1845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumText: {fileID: 4258227390074763960}
   retryButton: {fileID: 1323176153}
+  hitCountText: {fileID: 1698633792}
 --- !u!114 &233245273984027832
 MonoBehaviour:
   m_ObjectHideFlags: 0
