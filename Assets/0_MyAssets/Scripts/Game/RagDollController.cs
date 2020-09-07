@@ -65,6 +65,7 @@ public class RagDollController : MonoBehaviour
         //hitPS.transform.position = other.ClosestPoint(other.transform.position);
         hitPS.Play();
         parentRb.isKinematic = true;
+        Variables.hitCount++;
         foreach (var rb in ragdollRbs)
         {
             rb.isKinematic = false;

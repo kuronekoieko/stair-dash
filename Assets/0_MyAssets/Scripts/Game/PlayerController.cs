@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
+        Variables.hitCount = 0;
     }
 
     private void FixedUpdate()
