@@ -95,6 +95,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    /*
+    lerp = (max - min) * t + min ・・・ ①
+    max = min + 100 ・・・②
+    ①、②より
+    min = lerp -100 * t
+    */
     float GetLerpMin(float lerp, float maxDistance, float t)
     {
         return lerp - maxDistance * t;
