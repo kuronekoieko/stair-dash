@@ -78,7 +78,7 @@ public class RagDollController : MonoBehaviour
             var randomAngle = Random.Range(0, 360);
             var angles = new Vector3(0, randomAngle, 0);
             var direction = Quaternion.Euler(angles) * Vector3.forward;
-            rb.AddForce(direction.normalized * 10f, ForceMode.Impulse);
+            rb.AddForce(direction.normalized * 5f, ForceMode.Impulse);
         }
     }
 }
