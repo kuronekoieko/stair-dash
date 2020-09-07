@@ -61,7 +61,7 @@ public class RagDollController : MonoBehaviour
     void HitPlayer(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) { return; }
-        hitPS.transform.position = other.ClosestPoint(other.transform.position);
+        //hitPS.transform.position = other.ClosestPoint(other.transform.position);
         hitPS.Play();
         parentRb.isKinematic = true;
         foreach (var rb in ragdollRbs)
