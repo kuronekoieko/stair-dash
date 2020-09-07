@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Variables.screenState == ScreenState.Start) return;
         if (isCurving)
         {
             forwardRb.velocity = Vector3.zero;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (isPreGoaled)
         {
             var pos = Vector3.zero;
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour
             horizontalRb.transform.localPosition = pos;
             return;
         }
+        if (Variables.screenState != ScreenState.Game) return;
         if (Input.GetMouseButtonDown(0))
         {
             var rate = InverseLerpUnclamped(0, horizontalLimit, horizontalRb.transform.localPosition.x);

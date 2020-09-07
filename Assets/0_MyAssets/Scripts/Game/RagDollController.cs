@@ -38,6 +38,7 @@ public class RagDollController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Variables.screenState != ScreenState.Game) return;
         switch (obstacleType)
         {
             case ObstacleType.Sitting:
