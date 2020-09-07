@@ -13,11 +13,13 @@ public class RagDollController : MonoBehaviour
     [SerializeField] ParticleSystem hitPS;
     [SerializeField] ObstacleType obstacleType;
     [SerializeField] Rigidbody parentRb;
-
+    [SerializeField] Transform luggageParentTf;
     Rigidbody[] ragdollRbs;
+    Rigidbody[] luggageRbs;
     private void Awake()
     {
-        ragdollRbs = GetComponentsInChildren<Rigidbody>();
+        ragdollRbs = animator.transform.GetChild(0).GetComponentsInChildren<Rigidbody>();
+        luggageRbs = luggageParentTf.GetComponentsInChildren<Rigidbody>();
     }
     void Start()
     {
@@ -68,6 +70,15 @@ public class RagDollController : MonoBehaviour
             var vec = transform.position - other.transform.position;
             rb.AddForce(vec.normalized * 100f, ForceMode.Impulse);
             animator.enabled = false;
+        }
+
+        foreach (var rb in luggageRbs)
+        {
+            rb.isKinematic = false;
+            var randomAngle = Random.Range(0, 360);
+            var angles = new Vector3(0, randomAngle, 0);
+            var direction = Quaternion.Euler(angles) * Vector3.forward;
+            rb.AddForce(direction.normalized * 10f, ForceMode.Impulse);
         }
     }
 }
