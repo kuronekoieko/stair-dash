@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody forwardRb;
     [SerializeField] Rigidbody horizontalRb;
+    [SerializeField] Collider preGoalCollider;
+    [SerializeField] Collider goalCollider;
     Vector3 tapPos;
     float horizontalSpeed;
     readonly float horizontalLimit = 2.5f;
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour
     float curveRadius;
     float horizontalInterpolate;
     readonly float horizontalDragMax = 200;
+    bool isPreGoaled;
 
     void Start()
     {
@@ -25,7 +29,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (isCurving)
         {
             forwardRb.velocity = Vector3.zero;
@@ -42,7 +45,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
+        if (isPreGoaled)
+        {
+            var pos = Vector3.zero;
+            pos.x = horizontalRb.transform.localPosition.x;
+            horizontalRb.transform.localPosition = pos;
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             var rate = InverseLerpUnclamped(0, horizontalLimit, horizontalRb.transform.localPosition.x);
@@ -59,14 +68,36 @@ public class PlayerController : MonoBehaviour
         }
 
         horizontalLocalPos = Vector3.LerpUnclamped(Vector3.zero, Vector3.right * horizontalLimit, horizontalInterpolate);
+        horizontalRb.transform.localPosition = horizontalLocalPos;
     }
 
     private void LateUpdate()
     {
-        horizontalRb.transform.localPosition = horizontalLocalPos;
+        //horizontalRb.transform.localPosition = horizontalLocalPos;
     }
 
     private void OnTriggerEnter(Collider other)
+    {
+        Curve(other);
+        PreGoal(other);
+        Goal(other);
+    }
+
+    void Goal(Collider other)
+    {
+        if (other != goalCollider) return;
+        if (Variables.screenState != ScreenState.Game) return;
+        Variables.screenState = ScreenState.Clear;
+    }
+
+    void PreGoal(Collider other)
+    {
+        if (other != preGoalCollider) return;
+        isPreGoaled = true;
+        horizontalRb.transform.DOLocalMoveX(0, 0.3f);
+    }
+
+    void Curve(Collider other)
     {
         if (other.gameObject.CompareTag("CurvePoint"))
         {
