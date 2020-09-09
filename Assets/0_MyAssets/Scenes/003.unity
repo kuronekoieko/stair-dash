@@ -15028,6 +15028,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7327726803122914059, guid: 5f5084bc7b4294ed6a6b88c5ec14a7ac,
+        type: 3}
+      propertyPath: preGoalCollider
+      value: 
+      objectReference: {fileID: 497377152}
+    - target: {fileID: 7327726803122914059, guid: 5f5084bc7b4294ed6a6b88c5ec14a7ac,
+        type: 3}
+      propertyPath: goalCollider
+      value: 
+      objectReference: {fileID: 378739170}
     - target: {fileID: 7327726803122914102, guid: 5f5084bc7b4294ed6a6b88c5ec14a7ac,
         type: 3}
       propertyPath: m_Name
